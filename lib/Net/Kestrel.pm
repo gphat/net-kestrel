@@ -25,13 +25,9 @@ use IO::Socket;
 
 Net::Kestrel is a B<text protocol> client for L<https://github.com/robey/kestrel>.
 
-=begin :prelude
-
 =head1 NOTES
 
 Net::Kestrel speaks Kestrel's text protocol only at present.
-
-=end :prelude
 
 =attr debug
 
