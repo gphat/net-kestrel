@@ -9,7 +9,7 @@ SKIP: {
     my $host = $ENV{TEST_NET_KESTREL_HOST};
     my $port = $ENV{TEST_NET_KESTREL_PORT} || 2222;
 
-    my $kes = Net::Kestrel->new(host => $host);
+    my $kes = Net::Kestrel->new(host => $host, port => $port);
 
     my $queue = 'test-net-kestrel';
 
