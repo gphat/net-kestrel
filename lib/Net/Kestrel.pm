@@ -29,7 +29,19 @@ Net::Kestrel is a B<text protocol> client for L<https://github.com/robey/kestrel
 
 =head1 NOTES
 
+=head2 Protocol
+
 Net::Kestrel speaks Kestrel's text protocol only at present.
+
+=head2 Error Handling
+
+Kestrel returns errors in the form of:
+
+  -Error string
+
+When any command returns a string like this, Net::Kestrel will die with that
+message.  Therefore you should C<eval> any methods you care to deal with
+errors for.
 
 =attr debug
 
@@ -96,7 +108,9 @@ sub confirm {
 
 =method get ($queuename)
 
-Gets an item from the queue.
+Gets an item from the queue.  Note that this implicitly begins a transaction
+and the item must be C<confirm>ed or kestrel will give the item to another
+client when you disconnect.
 
 =cut
 
