@@ -167,6 +167,8 @@ sub _write_and_read {
     } elsif($resp =~ /^-(.*)\n$/) {
         # Crap, an error.  throw it
         die $1;
+    } elsif($resp =~ /^\*\n$/) {
+        $resp = undef;
     }
 
     return $resp;
