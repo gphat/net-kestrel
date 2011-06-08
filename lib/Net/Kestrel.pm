@@ -184,5 +184,3 @@ __END__
 Me
 
 =end :postlude
-
-1;
