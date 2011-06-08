@@ -1,3 +1,4 @@
+use strict;
 use Test::More;
 use Test::Exception;
 
@@ -9,14 +10,27 @@ SKIP: {
     my $port = $ENV{TEST_NET_KESTREL_PORT} || 2222;
 
     my $kes = Net::Kestrel->new(host => $host);
-    $kes->put('ass', 'hole');
 
-    cmp_ok('hole', 'eq', $kes->peek('ass'), 'peek');
+    my $queue = 'test-net-kestrel';
 
-    cmp_ok('hole', 'eq', $kes->get('ass'), 'get');
-    ok($kes->confirm('ass', 1), 'confirm returned true');
+    ## Flush the queue so our test starts from a known point
+    $kes->flush($queue);
 
-    dies_ok { $kes->confirm('ass', 1) } 'confirm dies with no transaction open';
+    $kes->put($queue, 'foo');
+    $kes->put($queue, 'bar');
+
+    cmp_ok($kes->peek($queue), 'eq', 'foo', 'peek');
+
+    cmp_ok($kes->get($queue), 'eq', 'foo', 'get');
+    ok($kes->confirm($queue, 1), 'confirm returned true');
+
+    dies_ok { $kes->confirm($queue, 1) } 'confirm dies with no transaction open';
+
+    cmp_ok($kes->get($queue), 'eq', 'bar', 'get');
+
+    ok($kes->confirm($queue, 1), 'confirm returned true');
+
+    ok(!defined($kes->get($queue)), 'undef as queue is empty');
 }
 
 done_testing();

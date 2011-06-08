@@ -106,6 +106,19 @@ sub confirm {
     return $self->_write_and_read($cmd);
 }
 
+=method flush ($queuename)
+
+Flush (empty) the specified queue.
+
+=cut
+
+sub flush {
+    my ($self, $queue) = @_;
+
+    my $cmd = "flush $queue\n";
+    $self->_write_and_read($cmd);
+}
+
 =method get ($queuename)
 
 Gets an item from the queue.  Note that this implicitly begins a transaction
