@@ -1,0 +1,78 @@
+# NAME
+
+Net::Kestrel - Kestrel Client for Perl
+
+# VERSION
+
+version 0.01
+
+# NOTES
+
+Net::Kestrel speaks Kestrel's text protocol only at present.
+
+# SYNOPSIS
+
+    use Net::Kestrel;
+
+    my $kes = Net::Kestrel->new; # defaults to host => 127.0.0.1, port => 2222
+    $kes->put($queuename, $value);
+    # ... later
+
+    # take a peek, doesn't remove the item
+    my $item = $kes->peek($queuename);
+
+    # get the item out, beginning a transaction
+    my $real_item = $kes->get($queuename);
+    # do something with it
+    $kes->confirm($queuename, 1); # since we got one item
+
+# DESCRIPTION
+
+Net::Kestrel is a __text protocol__ client for [https://github.com/robey/kestrel](https://github.com/robey/kestrel).
+
+# ATTRIBUTES
+
+## debug
+
+## host
+
+The ip address of the Kestrel host you want to connect to.
+
+## port
+
+The port to connect to.  Defaults to 22133.
+
+# METHODS
+
+## confirm ($queuename, $count)
+
+Confirms $count items from the queue.
+
+## get ($queuename)
+
+Gets an item from the queue.
+
+## peek ($queuename)
+
+Peeks into the specified queue and "peeks" at the next item.
+
+## put ($queuename, $string)
+
+Puts the provided payload into the specified queue.
+
+1;
+
+# CONTRIBUTORS
+
+Me
+
+# AUTHOR
+
+Cory G Watson <gphat@cpan.org>
+
+# COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2011 by Infinity Interactive, Inc.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
