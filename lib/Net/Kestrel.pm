@@ -18,7 +18,9 @@ use IO::Socket;
 
     # get the item out, beginning a transaction
     my $real_item = $kes->get($queuename);
-    # do something with it
+    # ... do something with it
+    
+    # then confirm we finished it so kestrel can discard it
     $kes->confirm($queuename, 1); # since we got one item
 
 =head1 DESCRIPTION
