@@ -47,6 +47,10 @@ The port to connect to.  Defaults to 22133.
 
 Confirms $count items from the queue.
 
+## flush ($queuename)
+
+Flush (empty) the specified queue.
+
 ## get ($queuename)
 
 Gets an item from the queue.  Note that this implicitly begins a transaction
@@ -63,6 +67,10 @@ Puts the provided payload into the specified queue.
 
 # NOTES
 
+## Incomplete
+
+__This module is brand new and is likely missing features.__
+
 ## Protocol
 
 Net::Kestrel speaks Kestrel's text protocol only at present.
@@ -76,8 +84,6 @@ Kestrel returns errors in the form of:
 When any command returns a string like this, Net::Kestrel will die with that
 message.  Therefore you should `eval` any methods you care to deal with
 errors for.
-
-1;
 
 # CONTRIBUTORS
 

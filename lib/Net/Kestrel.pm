@@ -29,6 +29,10 @@ Net::Kestrel is a B<text protocol> client for L<https://github.com/robey/kestrel
 
 =head1 NOTES
 
+=head2 Incomplete
+
+B<This module is brand new and is likely missing features.>
+
 =head2 Protocol
 
 Net::Kestrel speaks Kestrel's text protocol only at present.
