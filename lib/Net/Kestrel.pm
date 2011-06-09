@@ -106,7 +106,7 @@ Confirms $count items from the queue.
 sub confirm {
     my ($self, $queue, $count) = @_;
     
-    my $cmd = "confirm $queue $count\n";
+    my $cmd = "confirm $queue $count";
     return $self->_write_and_read($cmd);
 }
 
@@ -119,7 +119,7 @@ Flush (empty) the specified queue.
 sub flush {
     my ($self, $queue) = @_;
 
-    my $cmd = "flush $queue\n";
+    my $cmd = "flush $queue";
     $self->_write_and_read($cmd);
 }
 
@@ -140,7 +140,6 @@ sub get {
     if(defined($timeout)) {
         $cmd .= " $timeout";
     }
-    $cmd .= "\n";
     return $self->_write_and_read($cmd);
 }
 
@@ -159,7 +158,6 @@ sub peek {
     if(defined($timeout)) {
         $cmd .= " $timeout";
     }
-    $cmd .= "\n";
     
     return $self->_write_and_read($cmd);
 }
@@ -173,7 +171,7 @@ Puts the provided payload into the specified queue.
 sub put {
     my ($self, $queue, $thing) = @_;
     
-    my $cmd = "put $queue:\n$thing\n\n";
+    my $cmd = "put $queue:\n$thing\n";
     $self->_write_and_read($cmd);
 }
 
@@ -183,7 +181,7 @@ sub _write_and_read {
     my $sock = $self->_connection;
 
     print STDERR "SENDING: $cmd\n" if $self->is_debug;
-    $sock->send($cmd);
+    $sock->send($cmd."\n");
 
     my $resp = <$sock>;
     print STDERR "RESPONSE: $resp\n" if $self->is_debug;
