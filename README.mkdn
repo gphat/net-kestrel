@@ -4,7 +4,7 @@ Net::Kestrel - Kestrel Client for Perl
 
 # VERSION
 
-version 0.01
+version 0.02
 
 # SYNOPSIS
 
@@ -55,11 +55,15 @@ Flush (empty) the specified queue.
 
 Gets an item from the queue.  Note that this implicitly begins a transaction
 and the item must be `confirm`ed or kestrel will give the item to another
-client when you disconnect.
+client when you disconnect.  Optionally you may provide a timeout (in
+milliseconds).  Net::Kestrel will block for that long waiting for a value in
+the queue.
 
-## peek ($queuename)
+## peek ($queuename, $timeout)
 
-Peeks into the specified queue and "peeks" at the next item.
+Peeks into the specified queue and "peeks" at the next item.  Optionally you
+may provide a timeout (in milliseconds).  Net::Kestrel will block for that
+long waiting for a value in the queue.
 
 ## put ($queuename, $string)
 
