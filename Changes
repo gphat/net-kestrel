@@ -1,6 +1,7 @@
 Revision history for Perl extension Net::Kestrel.
 
 0.02
+    - A bit of code cleanup
     - Timeouts for get and peek.
 
 0.01
