@@ -127,27 +127,40 @@ sub flush {
 
 Gets an item from the queue.  Note that this implicitly begins a transaction
 and the item must be C<confirm>ed or kestrel will give the item to another
-client when you disconnect.
+client when you disconnect.  Optionally you may provide a timeout (in
+milliseconds).  Net::Kestrel will block for that long waiting for a value in
+the queue.
 
 =cut
 
 sub get {
-    my ($self, $queue, $count) = @_;
+    my ($self, $queue, $timeout) = @_;
     
-    my $cmd = "get $queue\n";
+    my $cmd = "get $queue";
+    if(defined($timeout)) {
+        $cmd .= " $timeout";
+    }
+    $cmd .= "\n";
     return $self->_write_and_read($cmd);
 }
 
-=method peek ($queuename)
+=method peek ($queuename, $timeout)
 
-Peeks into the specified queue and "peeks" at the next item.
+Peeks into the specified queue and "peeks" at the next item.  Optionally you
+may provide a timeout (in milliseconds).  Net::Kestrel will block for that
+long waiting for a value in the queue.
 
 =cut
 
 sub peek {
-    my ($self, $queue) = @_;
+    my ($self, $queue, $timeout) = @_;
     
-    my $cmd = "peek $queue\n";
+    my $cmd = "peek $queue";
+    if(defined($timeout)) {
+        $cmd .= " $timeout";
+    }
+    $cmd .= "\n";
+    
     return $self->_write_and_read($cmd);
 }
 
