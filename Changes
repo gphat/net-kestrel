@@ -1,5 +1,9 @@
 Revision history for Perl extension Net::Kestrel.
 
+0.03
+    - Add timeout
+    - Print proper errors when connections fail and whatnot
+
 0.02
     - A bit of code cleanup
     - Timeouts for get and peek.
