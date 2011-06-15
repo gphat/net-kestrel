@@ -81,6 +81,18 @@ has 'port' => (
     default => 2222
 );
 
+=attr timeout
+
+The timeout value for operations.  Defaults to 3 seconds.
+
+=cut
+
+has 'timeout' => (
+    is => 'ro',
+    isa => 'Int',
+    default => 3
+);
+
 has _connection => (
     is => 'rw',
     isa => 'IO::Socket::INET',
@@ -89,12 +101,21 @@ has _connection => (
 
 sub _build__connection {
     my ($self) = @_;
-    
-    return IO::Socket::INET->new(
+
+    $SIG{PIPE} = sub { die 'Connection to '.$self->host.' port '.$self->port.' went away!' };
+
+    my $sock = IO::Socket::INET->new(
         PeerAddr => $self->host,
         PeerPort => $self->port,
-        Proto => 'tcp'
+        Proto => 'tcp',
+        Timeout => $self->timeout
     );
+
+    if(!defined($sock)) {
+        die('Failed to connect to '.$self->host.' port '.$self->port);
+    }
+
+    return $sock;
 }
 
 =method confirm ($queuename, $count)
@@ -107,6 +128,20 @@ sub confirm {
     my ($self, $queue, $count) = @_;
     
     my $cmd = "confirm $queue $count";
+    return $self->_write_and_read($cmd);
+}
+
+=method delete ($queuename)
+
+Delete the specified queue.  B<NOTE: This is not yet supported in Kestrel's
+text protocol.>
+
+=cut
+
+sub delete {
+    my ($self, $queue) = @_;
+
+    my $cmd = "delete $queue";
     return $self->_write_and_read($cmd);
 }
 
