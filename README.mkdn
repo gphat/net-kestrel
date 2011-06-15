@@ -4,7 +4,7 @@ Net::Kestrel - Kestrel Client for Perl
 
 # VERSION
 
-version 0.02
+version 0.03
 
 # SYNOPSIS
 
@@ -41,11 +41,20 @@ The ip address of the Kestrel host you want to connect to.
 
 The port to connect to.  Defaults to 22133.
 
+## timeout
+
+The timeout value for operations.  Defaults to 3 seconds.
+
 # METHODS
 
 ## confirm ($queuename, $count)
 
 Confirms $count items from the queue.
+
+## delete ($queuename)
+
+Delete the specified queue.  __NOTE: This is not yet supported in Kestrel's
+text protocol.__
 
 ## flush ($queuename)
 
