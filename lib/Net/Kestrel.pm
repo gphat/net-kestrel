@@ -232,6 +232,12 @@ sub _write_and_read {
     $sock->send($cmd."\n");
 
     my $resp = <$sock>;
+
+    if (not($self->is_blocking) && not(defined($resp))) {
+        print STDERR "NO RESPONSE (non-blocking)\n" if $self->is_debug;
+        return;
+    }
+
     print STDERR "RESPONSE: $resp\n" if $self->is_debug;
 
     if($resp =~ /^:(.*)\n$/) {
