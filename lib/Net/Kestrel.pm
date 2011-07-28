@@ -93,6 +93,18 @@ has 'timeout' => (
     default => 3
 );
 
+=attr is_blocking
+
+Should the socket connect be blocking or not.  Defaults is to be blocking.
+
+=cut
+
+has 'is_blocking' => (
+    is      => 'ro',
+    isa     => 'Bool',
+    default => 1,
+);
+
 has _connection => (
     is => 'rw',
     isa => 'IO::Socket::INET',
@@ -108,7 +120,8 @@ sub _build__connection {
         PeerAddr => $self->host,
         PeerPort => $self->port,
         Proto => 'tcp',
-        Timeout => $self->timeout
+        Timeout => $self->timeout,
+        Blocking => $self->is_blocking
     );
 
     if(!defined($sock)) {
@@ -219,6 +232,12 @@ sub _write_and_read {
     $sock->send($cmd."\n");
 
     my $resp = <$sock>;
+
+    if (not($self->is_blocking) && not(defined($resp))) {
+        print STDERR "NO RESPONSE (non-blocking)\n" if $self->is_debug;
+        return;
+    }
+
     print STDERR "RESPONSE: $resp\n" if $self->is_debug;
 
     if($resp =~ /^:(.*)\n$/) {
