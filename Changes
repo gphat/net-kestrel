@@ -1,5 +1,8 @@
 Revision history for Perl extension Net::Kestrel.
 
+0.04
+    - Fix typo in repository (thanks Uwe Voelker)
+
 0.03
     - Add timeout
     - Print proper errors when connections fail and whatnot
