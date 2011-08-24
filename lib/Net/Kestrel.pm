@@ -19,7 +19,7 @@ use IO::Socket;
     # get the item out, beginning a transaction
     my $real_item = $kes->get($queuename);
     # ... do something with it
-    
+
     # then confirm we finished it so kestrel can discard it
     $kes->confirm($queuename, 1); # since we got one item
 
@@ -126,7 +126,7 @@ Confirms $count items from the queue.
 
 sub confirm {
     my ($self, $queue, $count) = @_;
-    
+
     my $cmd = "confirm $queue $count";
     return $self->_write_and_read($cmd);
 }
@@ -170,7 +170,7 @@ the queue.
 
 sub get {
     my ($self, $queue, $timeout) = @_;
-    
+
     my $cmd = "get $queue";
     if(defined($timeout)) {
         $cmd .= " $timeout";
@@ -188,12 +188,12 @@ long waiting for a value in the queue.
 
 sub peek {
     my ($self, $queue, $timeout) = @_;
-    
+
     my $cmd = "peek $queue";
     if(defined($timeout)) {
         $cmd .= " $timeout";
     }
-    
+
     return $self->_write_and_read($cmd);
 }
 
@@ -205,8 +205,21 @@ Puts the provided payload into the specified queue.
 
 sub put {
     my ($self, $queue, $thing) = @_;
-    
+
     my $cmd = "put $queue:\n$thing\n";
+    $self->_write_and_read($cmd);
+}
+
+=method stats
+
+Returns stats from the kestrel instance
+
+=cut
+
+sub stats {
+    my ($self) = @_;
+
+    my $cmd = "stats";
     $self->_write_and_read($cmd);
 }
 
@@ -218,7 +231,15 @@ sub _write_and_read {
     print STDERR "SENDING: $cmd\n" if $self->is_debug;
     $sock->send($cmd."\n");
 
-    my $resp = <$sock>;
+    my $resp = undef;
+    while(my $line = <$sock>) {
+        $resp .= $line;
+        last if $line =~ /^\+(\d+)\n$/;
+        last if $line =~ /END\n$/;
+        last if $line =~ /^-(.*)\n$/;
+        last if $line =~ /^\*\n$/;
+        last if $line =~ /^:.*\n$/;
+    }
     print STDERR "RESPONSE: $resp\n" if $self->is_debug;
 
     if($resp =~ /^:(.*)\n$/) {
