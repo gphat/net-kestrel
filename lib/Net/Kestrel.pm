@@ -9,8 +9,10 @@ use IO::Socket;
 
     use Net::Kestrel;
 
+    my $queuename = 'myqueue';
+
     my $kes = Net::Kestrel->new; # defaults to host => 127.0.0.1, port => 2222
-    $kes->put($queuename, $value);
+    $kes->put($queuename, 'foobar');
     # ... later
 
     # take a peek, doesn't remove the item
