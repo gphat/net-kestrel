@@ -102,7 +102,7 @@ has _connection => (
 sub _build__connection {
     my ($self) = @_;
 
-    $SIG{PIPE} = sub { die 'Connection to '.$self->host.' port '.$self->port.' went away!' };
+    $SIG{PIPE} = sub { die 'Connection to '.$self->host.' port '.$self->port.' went away! Server down?' };
 
     my $sock = IO::Socket::INET->new(
         PeerAddr => $self->host,
