@@ -234,6 +234,10 @@ sub _write_and_read {
     my $resp = undef;
     while(my $line = <$sock>) {
         $resp .= $line;
+        # There isn't ONE way to know that kestrel is done talking to us. So
+        # we'll use the same logic we use below to detect the type of information
+        # we got back.  Not optimal, but I don't purport to be very good at
+        # socket programming.
         last if $line =~ /^\+(\d+)\n$/;
         last if $line =~ /END\n$/;
         last if $line =~ /^-(.*)\n$/;
