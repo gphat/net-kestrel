@@ -73,7 +73,7 @@ has 'host' => (
 
 =attr port
 
-The port to connect to.  Defaults to 22133.
+The port to connect to.  Defaults to 2222.
 
 =cut
 
