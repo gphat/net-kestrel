@@ -1,6 +1,8 @@
 Revision history for Perl extension Net::Kestrel.
 
  {{$NEXT}}
+
+0.07 Nov 15 2011
    - More POD improvements
 
 0.06 Nov 15 2011
