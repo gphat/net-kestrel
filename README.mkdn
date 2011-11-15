@@ -4,14 +4,16 @@ Net::Kestrel - Kestrel Client for Perl
 
 # VERSION
 
-version 0.04
+version 0.06
 
 # SYNOPSIS
 
     use Net::Kestrel;
 
+    my $queuename = 'myqueue';
+
     my $kes = Net::Kestrel->new; # defaults to host => 127.0.0.1, port => 2222
-    $kes->put($queuename, $value);
+    $kes->put($queuename, 'foobar');
     # ... later
 
     # take a peek, doesn't remove the item
@@ -20,7 +22,6 @@ version 0.04
     # get the item out, beginning a transaction
     my $real_item = $kes->get($queuename);
     # ... do something with it
-    
 
     # then confirm we finished it so kestrel can discard it
     $kes->confirm($queuename, 1); # since we got one item
@@ -39,7 +40,7 @@ The ip address of the Kestrel host you want to connect to.
 
 ## port
 
-The port to connect to.  Defaults to 22133.
+The port to connect to.  Defaults to 2222.
 
 ## timeout
 
@@ -77,6 +78,10 @@ long waiting for a value in the queue.
 ## put ($queuename, $string)
 
 Puts the provided payload into the specified queue.
+
+## stats
+
+Returns stats from the kestrel instance
 
 # NOTES
 

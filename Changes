@@ -1,6 +1,7 @@
 Revision history for Perl extension Net::Kestrel.
 
  {{$NEXT}}
+   - More POD improvements
 
 0.06 Nov 15 2011
    - Fix typo in pod (Thanks Brian Cassidy)

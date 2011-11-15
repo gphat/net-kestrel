@@ -135,8 +135,7 @@ sub confirm {
 
 =method delete ($queuename)
 
-Delete the specified queue.  B<NOTE: This is not yet supported in Kestrel's
-text protocol.>
+Delete the specified queue.
 
 =cut
 
@@ -160,7 +159,7 @@ sub flush {
     $self->_write_and_read($cmd);
 }
 
-=method get ($queuename)
+=method get ($queuename, $timeout_in_millis)
 
 Gets an item from the queue.  Note that this implicitly begins a transaction
 and the item must be C<confirm>ed or kestrel will give the item to another
@@ -180,7 +179,7 @@ sub get {
     return $self->_write_and_read($cmd);
 }
 
-=method peek ($queuename, $timeout)
+=method peek ($queuename, $timeout_in_millis)
 
 Peeks into the specified queue and "peeks" at the next item.  Optionally you
 may provide a timeout (in milliseconds).  Net::Kestrel will block for that
