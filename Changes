@@ -1,6 +1,8 @@
 Revision history for Perl extension Net::Kestrel.
 
  {{$NEXT}}
+
+0.08 Dec 31 2011
    - Fix defaulting of host attribute (Mike Eldridge)
 
 0.07 Nov 15 2011
