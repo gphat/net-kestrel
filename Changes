@@ -1,6 +1,7 @@
 Revision history for Perl extension Net::Kestrel.
 
  {{$NEXT}}
+   - Fix defaulting of host attribute (Mike Eldridge)
 
 0.07 Nov 15 2011
    - More POD improvements

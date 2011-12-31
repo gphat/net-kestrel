@@ -68,7 +68,7 @@ The ip address of the Kestrel host you want to connect to.
 has 'host' => (
     is => 'ro',
     isa => 'Str',
-    required => 1
+    default => '127.0.0.1'
 );
 
 =attr port
